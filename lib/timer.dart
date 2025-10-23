@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TimerPage extends StatefulWidget {
   const TimerPage({super.key});
@@ -84,7 +85,7 @@ class _TimerPageState extends State<TimerPage> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text("Timer Gestoppt")));
+    ).showSnackBar(const SnackBar(content: Text("Timer Stopped")));
   }
 
   @override
@@ -97,6 +98,7 @@ class _TimerPageState extends State<TimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Timer")),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -106,10 +108,11 @@ class _TimerPageState extends State<TimerPage> {
             TextFormField(
               controller: _timerTextController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Sekunden eingeben"),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(labelText: "Enter Seconds"),
             ),
             Text(
-              "Verbleibende Zeit: ${_formatTime(time)}",
+              "Remaining Time: ${_formatTime(time)}",
               style: const TextStyle(fontSize: 24),
             ),
 
